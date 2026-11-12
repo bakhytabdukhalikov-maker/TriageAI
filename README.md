@@ -1,9 +1,10 @@
 # TriageAI — Multilingual Support Ticket Intelligence
+🔗 **Live demo:** https://triageai-2026.streamlit.app
 
-Automatically translates, classifies, scores urgency, and summarizes
-incoming customer support tickets using Hugging Face pipelines.
+Automatically translates, classifies, analyzes sentiment and summarizes support tickets using an LLM via the Groq API.
 
 ## Project structure
+```
 triageai/
 ├── backend/
 │   ├── main.py            # FastAPI app, sends tickets to the Groq LLM API
@@ -13,5 +14,5 @@ triageai/
 │   └── requirements.txt   # frontend dependencies
 ├── .gitignore
 └── README.md
-
+```
 
