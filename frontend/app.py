@@ -3,10 +3,14 @@ TriageAI Dashboard - simple UI for agents to submit and view triaged tickets.
 Run with: streamlit run app.py
 """
 
+import os
+
 import streamlit as st
 import requests
 
-API_URL = "http://localhost:8000/process_ticket"
+# Backend on Render (can be overridden with the API_URL environment variable,
+# e.g. API_URL=http://localhost:8000/process_ticket for local testing)
+API_URL = os.getenv("API_URL", "https://triageai-backend-kymi.onrender.com/process_ticket")
 
 st.set_page_config(page_title="TriageAI Dashboard", layout="centered")
 st.title("🎫 TriageAI — Ticket Triage")
@@ -20,8 +24,13 @@ if st.button("Process Ticket"):
     if not text.strip():
         st.warning("Please enter some text.")
     else:
-        with st.spinner("Running AI pipeline..."):
-            response = requests.post(API_URL, json={"text": text, "language": lang})
+        with st.spinner("Running AI pipeline... (the first request can take up to a minute while the server wakes up)"):
+            try:
+                response = requests.post(API_URL, json={"text": text, "language": lang}, timeout=120)
+            except requests.exceptions.RequestException:
+                st.error("Could not reach the TriageAI server. Please wait a moment and try again.")
+                st.stop()
+
             if response.status_code == 200:
                 result = response.json()
                 st.success("Ticket processed!")
