@@ -4,15 +4,14 @@ Automatically translates, classifies, scores urgency, and summarizes
 incoming customer support tickets using Hugging Face pipelines.
 
 ## Project structure
-```
 triageai/
 ├── backend/
-│   ├── main.py            # FastAPI app + HF pipeline chain
-│   └── requirements.txt
+│   ├── main.py            # FastAPI app, sends tickets to the Groq LLM API
+│   └── requirements.txt   # backend dependencies
 ├── frontend/
-│   └── app.py              # Streamlit dashboard
-└── data/                    # sample tickets, test data
-```
-
+│   ├── app.py             # Streamlit dashboard
+│   └── requirements.txt   # frontend dependencies
+├── .gitignore
+└── README.md
 
 
